@@ -7,3 +7,10 @@
 ## 3. File di configurazione
 #### 3.1 Modificare oppure copiare il file **example.config.json** in un file chiamato **config.json**
 ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/6d9c1832-d281-49ee-8ff5-8123b06e5cc9)
+#### 3.2 Creare o utilizzare un bot (app)
+![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/dbbbbe91-ea9e-4d90-8c96-8935577e319c)
+#### 3.2.1 Preparare il bot
+#### Andare nella tab **Installazione**
+![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/e721aca9-ac8b-442a-8e6a-776652cec290)
+
+
