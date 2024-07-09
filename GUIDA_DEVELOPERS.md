@@ -16,4 +16,6 @@
 ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/4f87f9fd-b532-4ddf-8c5c-4f5a0aa8360d)
 #### Poi nelle **impostazioni predefinite d'installazione** selezionare come scopes **applications.commands** e **bot** e come permessi **Administrator**
 ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/eada823c-03ce-496f-af51-783556fec0fb)
-#### Successivamente dirigetevi nella tab ****
+#### Successivamente dirigetevi nella tab **Bot** per memorizzare il token e attivare gli **intents** e **disibilitare** l'opzione del **bot pubblico**
+![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/c1c6ee34-d58e-4047-9010-682f9a06eef1)
+
