@@ -12,5 +12,8 @@
 #### 3.2.1 Preparare il bot
 #### Andare nella tab **Installazione**
 ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/e721aca9-ac8b-442a-8e6a-776652cec290)
-
-
+#### Abilitare la spunta su **Guild Install** su **Metodi d'installazione**
+![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/4f87f9fd-b532-4ddf-8c5c-4f5a0aa8360d)
+#### Poi nelle **impostazioni predefinite d'installazione** selezionare come scopes **applications.commands** e **bot** e come permessi **Administrator**
+![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/eada823c-03ce-496f-af51-783556fec0fb)
+#### Successivamente dirigetevi nella tab ****
