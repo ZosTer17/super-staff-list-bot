@@ -15,7 +15,7 @@ module.exports = {
                 content: "Non hai impostato nessun ruolo",
                 ephemeral: true
             });
-        await interaction.guild.members.fetch();
+        await interaction.guild.members.fetch().catch(err => console.log(err));
         var usersXRole = [];
         staffRoles.forEach(role => {
             usersXRole.push(role.members.map(m => m.user));

@@ -7,6 +7,7 @@ module.exports = {
         setInterval(async () => {
             // Aggiorna tutte le staff list
             const guildsPanels = await panels.find({});
+            // console.log(guildsPanels.find(panel => panel.guildid = "1228020687881375895"));
             if (!guildsPanels) return;
             guildsPanels.forEach(async (panel) => {
                 const guild = client.guilds.cache.get(panel.guildid);
@@ -16,6 +17,7 @@ module.exports = {
                     const role = guild.roles.cache.get(id);
                     if (role) return role;
                 }).filter(role => role);
+                if (staffRoles.length == 0) return; // Se i ruoli non esistono esco
                 await guild.members.fetch();
                 var usersXRole = [];
                 staffRoles.forEach(role => {
