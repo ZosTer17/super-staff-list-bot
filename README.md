@@ -1,4 +1,4 @@
-# Guida all'installazione e alla modifica
+# Guida all'installazione e alla modifica (developers)
 
 ## 1. Scaricare il codice
 ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/4fc391ea-02bd-4e24-adeb-6cfd463c987a)
