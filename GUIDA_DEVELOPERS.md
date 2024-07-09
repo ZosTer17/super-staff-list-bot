@@ -19,6 +19,6 @@
 #### Successivamente dirigetevi nella tab **Bot** e attivate gli **intents** e **disibilitare** l'opzione del **bot pubblico**
 ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/c1c6ee34-d58e-4047-9010-682f9a06eef1) ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/e792510e-f094-41d8-bf92-35fd58fdd6c9)
 #### 3.2.2 Raccogliere le info del bot
-#### Nel file di configurazione ci sono due opzioni che sono legate direttamente al bot il ```token``` e il ```clientID``` rispettivamente si trovano uno nella tab bot e l'altro nella tab Informazioni Generali
+#### Nel file di configurazione ci sono due opzioni che sono legate direttamente al bot il ```token``` e il ```clientID``` rispettivamente si trovano uno nella tab ``bot`` e l'altro nella tab Informazioni Generali
 ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/c5011594-5442-48ec-8cc7-e549325599c1)
 ![image](https://github.com/STG-Bots/super-staff-list-bot/assets/74712999/310b4dc1-4fd6-460e-8054-4b35ed901d2d)
