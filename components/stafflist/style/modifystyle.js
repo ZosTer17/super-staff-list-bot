@@ -18,8 +18,9 @@ module.exports = {
         collector.on('end', collection => {
             const newStyle = collection.map(msg => msg)[0];
             if (newStyle) {
+                const styles = newStyle.content.split('\n');
                 newStyle.delete();
-                if (!(newStyle.content.includes('{role}') && newStyle.content.includes('{count}') && newStyle.content.includes('{user}'))) return;
+                if (!(styles[0].includes('{role}') && styles[0].includes('{count}') && styles[1].includes('{user}'))) return;
                 const optionEmbed = interaction.message.embeds[0].data;
                 const newOptionEmbed = new EmbedBuilder(optionEmbed)
                     .setFields(optionEmbed.fields[0], optionEmbed.fields[1], { name: optionEmbed.fields[2].name, value: newStyle.content }, optionEmbed.fields[3], optionEmbed.fields[4]);
