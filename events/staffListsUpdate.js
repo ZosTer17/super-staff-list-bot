@@ -18,7 +18,7 @@ module.exports = {
                     if (role) return role;
                 }).filter(role => role);
                 if (staffRoles.length == 0) return; // Se i ruoli non esistono esco
-                await guild.members.fetch();
+                await guild.members.fetch().catch(err => console.log(err));
                 var usersXRole = [];
                 staffRoles.forEach(role => {
                     usersXRole.push(role.members.map(m => m.user));

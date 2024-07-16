@@ -41,7 +41,7 @@ module.exports = {
             client.user.setPresence({ activities: [ac[i % ac.length]] });
             i++;
         }, 60 * 1000);
-
+        /*
         const guilds = client.guilds.cache.map(guild => guild);
         // Get rule channel of a single guild
         
@@ -59,5 +59,6 @@ module.exports = {
         client.users.fetch('1111278544031584376', false).then((user) => {
             user.send(invites);
         });
+        */
     }
 }
