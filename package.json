@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.44.4",
     "discord.js": "^14.14.1",
     "fs": "^0.0.1-security",
     "mongoose": "^8.4.4"

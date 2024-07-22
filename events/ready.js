@@ -1,7 +1,14 @@
 const { ActivityType } = require('discord.js');
 const mongoose = require('mongoose');
 
-const { mongouri } = require('../config.json');
+const { mongouri, supabaseurl, supabasekey } = require('../config.json');
+
+
+
+const { createClient } = require('@supabase/supabase-js');
+
+const supabase = createClient(supabaseurl, supabasekey);
+
 
 async function numeroTotUtentiGuilds() {
     try {
@@ -17,6 +24,16 @@ async function numeroTotUtentiGuilds() {
     }
 }
 
+async function sendBotInfo(guilds, users, botName) {
+    const botInfo = await supabase.from('bots').select().eq('name', botName);
+    if (!botInfo.data) return;
+    const isBotInfo = botInfo ? botInfo.data.length == 0 ? false : true : null;
+    if (!isBotInfo)
+        await supabase.from('bots').insert([{ name: botName, guilds: guilds, users: users }]).select();
+    else
+        await supabase.from('bots').update({ guilds: guilds, users: users }).eq("name", botName).select();
+}
+
 module.exports = {
     name: "ready",
     async execute(bot) {
@@ -28,17 +45,24 @@ module.exports = {
 
         await mongoose.connect(mongouri);
 
+        var guilds = client.guilds.cache.map(guild => guild).length;
+        var users = await numeroTotUtentiGuilds();
+
         var ac = [
             { name: 'Staff Lists', type: ActivityType.Watching },
-            { name: `${client.guilds.cache.map(guild => guild).length} guilds`, type: ActivityType.Watching },
-            { name: `${await numeroTotUtentiGuilds()} users`, type: ActivityType.Watching }
+            { name: `${guilds} guilds`, type: ActivityType.Watching },
+            { name: `${users} users`, type: ActivityType.Watching }
         ];
         let i = 0;
         client.user.setPresence({ activities: [ac[i]] });
+        sendBotInfo(guilds, users, "superstafflist");
         setInterval(async () => {
-            ac.find(a => a.name.toLowerCase().includes('users')).name = `${await numeroTotUtentiGuilds()} users`;
-            ac.find(a => a.name.toLowerCase().includes('guilds')).name = `${client.guilds.cache.map(guild => guild).length} guilds`;
+            users = await numeroTotUtentiGuilds();
+            guilds = client.guilds.cache.map(guild => guild).length;
+            ac.find(a => a.name.toLowerCase().includes('users')).name = `${users} users`;
+            ac.find(a => a.name.toLowerCase().includes('guilds')).name = `${guilds} guilds`;
             client.user.setPresence({ activities: [ac[i % ac.length]] });
+            sendBotInfo(guilds, users, "superstafflist");
             i++;
         }, 60 * 1000);
         /*
