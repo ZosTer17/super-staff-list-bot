@@ -23,23 +23,20 @@ module.exports = {
             const newRoleId = newRoleMsg ? newRoleMsg.content.slice(3, newRoleMsg.content.length - 1) : null;
             const role = interaction.guild.roles.cache.get(newRoleId);
             newRoleMsg ? newRoleMsg.delete() : null;
-            // gte the avatar image of the bot
             if (role) {
                 const optionEmbed = interaction.message.embeds[0].data;
                 const newRoles =
-                    optionEmbed.fields[1].value == "Nessun ruolo impostato"
+                    optionEmbed.fields[1].value != "Nessun ruolo impostato"
                         ?
-                        { name: optionEmbed.fields[1].name, value: `<@&${role.id}>` }
+                        { name: optionEmbed.fields[1].name, value: removeTagsRoles(interaction.guild, optionEmbed.fields[1].value, `<@&${role.id}>`) }
                         :
-                        { name: optionEmbed.fields[1].name, value: removeTagsRoles(interaction.guild, optionEmbed.fields[1].value, `<@&${role.id}>`) };
+                        { name: optionEmbed.fields[1].name, value: "Nessun ruolo impostato"}
                 const newOptionEmbed = new EmbedBuilder(optionEmbed)
                     .setFields(optionEmbed.fields[0], newRoles, optionEmbed.fields[2], optionEmbed.fields[3], optionEmbed.fields[4]);
                 interaction.message.edit({
                     embeds: [newOptionEmbed]
                 });
             }
-            newRoleMsg.delete();
-            messageAlert.delete();
         });
     }
 }
