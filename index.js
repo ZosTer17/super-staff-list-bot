@@ -2,7 +2,7 @@ const { Client, GatewayIntentBits, PermissionsBitField } = require('discord.js')
 const { REST, Routes } = require('discord.js')
 const { clientID, token, devs } = require('./config.json')
 const fs = require('fs');
-// Refactoring
+
 global.client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
