@@ -1,13 +1,14 @@
 const { ActivityType } = require('discord.js');
 const mongoose = require('mongoose');
 
-const { mongouri, supabaseurl, supabasekey } = require('../config.json');
+const { mongouri } = require('../config.json');
 
 
-
+/*
 const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(supabaseurl, supabasekey);
+*/
 
 
 async function numeroTotUtentiGuilds() {
@@ -23,7 +24,7 @@ async function numeroTotUtentiGuilds() {
     } catch (error) {
     }
 }
-
+/*
 async function sendBotInfo(guilds, users, botName) {
     const botInfo = await supabase.from('bots').select().eq('name', botName);
     if (!botInfo.data) return;
@@ -33,6 +34,7 @@ async function sendBotInfo(guilds, users, botName) {
     else
         await supabase.from('bots').update({ guilds: guilds, users: users }).eq("name", botName).select();
 }
+*/
 
 module.exports = {
     name: "ready",
@@ -55,14 +57,12 @@ module.exports = {
         ];
         let i = 0;
         client.user.setPresence({ activities: [ac[i]] });
-        sendBotInfo(guilds, users, "superstafflist");
         setInterval(async () => {
             users = await numeroTotUtentiGuilds();
             guilds = client.guilds.cache.map(guild => guild).length;
             ac.find(a => a.name.toLowerCase().includes('users')).name = `${users} users`;
             ac.find(a => a.name.toLowerCase().includes('guilds')).name = `${guilds} guilds`;
             client.user.setPresence({ activities: [ac[i % ac.length]] });
-            sendBotInfo(guilds, users, "superstafflist");
             i++;
         }, 60 * 1000);
         /*

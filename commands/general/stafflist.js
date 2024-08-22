@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ChannelType } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ChannelType, GatewayIntentBits, PermissionsBitField } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,7 +9,11 @@ module.exports = {
                 .setDescription('Canale della staff list')
                 .setRequired(true)
         ),
-    onlystaff: true,
+    memberPermissions: [PermissionsBitField.Flags.Administrator],
+    botPermissions: [
+        PermissionsBitField.Flags.SendMessages,
+        PermissionsBitField.Flags.EmbedLinks
+    ],
     async execute(interaction) {
         // get option
         const channel = interaction.options.getChannel('canale');
@@ -19,7 +23,7 @@ module.exports = {
                 ephemeral: true
             });
         await interaction.reply({
-        embeds: [
+            embeds: [
                 new EmbedBuilder()
                     .setTitle("Crea la staff list")
                     .setDescription("Utilizza i pulsanti qui sotto per modificare le opzioni")

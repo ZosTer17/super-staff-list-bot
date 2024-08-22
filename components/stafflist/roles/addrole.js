@@ -1,11 +1,15 @@
-const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, InteractionResponse } = require('discord.js');
+const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, InteractionResponse, PermissionsBitField } = require('discord.js');
 
 const sortTagsRoles = require('../../../functions/sortRolesTags');
 const isDuplicatedTagsRoles = require('../../../functions/isDuplicatedTagsRoles');
 
 module.exports = {
     id: "stafflist-add_role",
-    onlystaff: true,
+    memberPermissions: [PermissionsBitField.Flags.Administrator],
+    botPermissions: [
+        PermissionsBitField.Flags.SendMessages,
+        PermissionsBitField.Flags.EmbedLinks
+    ],
     async execute(interaction) {
         const filter = (m) => m.author.id === interaction.user.id;
         const collector = interaction.channel.createMessageCollector({ filter, time: 2 * (60 * 1000), max: 1 });

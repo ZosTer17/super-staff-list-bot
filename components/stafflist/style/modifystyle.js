@@ -1,7 +1,11 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 module.exports = {
     id: "stafflist-modify_style",
-    onlystaff: true,
+    memberPermissions: [PermissionsBitField.Flags.Administrator],
+    botPermissions: [
+        PermissionsBitField.Flags.SendMessages,
+        PermissionsBitField.Flags.EmbedLinks
+    ],
     async execute(interaction) {
         const filter = (m) => m.author.id === interaction.user.id;
         const collector = interaction.channel.createMessageCollector({ filter, time: 1 * (5 * 1000), max: 1 });
