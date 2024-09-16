@@ -31,6 +31,7 @@ module.exports = {
 
                 const description = `${rolesDisplay.map((role, index) =>
                     `${styles[0].replace('{role}', role).replace('{count}', usersXRoleDisplay[index].length)}\n${usersXRoleDisplay[index].map(user => `${styles[1].replace('{user}', user)}`).join('\n')}`).join('\n\n')}`;
+                if (description.length >= 4000) return; // Controllo se la descrizione dell'embed supera i 4000 caratteri massimi
                 const embed = new EmbedBuilder()
                     .setTitle('Staff list')
                     .setDescription(description)

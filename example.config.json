@@ -2,7 +2,5 @@
     "token": "",
     "clientID": "",
     "mongouri": "",
-    "devs": [""],
-    "supabaseurl": "",
-    "supabasekey": ""
+    "devs": [""]
 }
