@@ -5,6 +5,10 @@ const panels = new Schema({
     channelid: String, 
     guildid: String,
     style: String,
+    embed: {
+        title: String,
+        color: String
+    },
     tags: {role: Boolean, user: Boolean},
     roles: [{
         id: String,

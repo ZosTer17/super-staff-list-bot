@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, PermissionsBitField } = require('discord.js');
+const { Client, GatewayIntentBits, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
 const { REST, Routes } = require('discord.js')
 const { clientID, token, devs } = require('./config.json')
 const fs = require('fs');
@@ -9,17 +9,13 @@ global.client = new Client({
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.DirectMessages
+
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.GuildEmojisAndStickers,
+
+        GatewayIntentBits.GuildInvites
     ]
 });
-
-// DB
-// const { MyDatabase } = require("./utilities/mydatabase");
-
-// global.guildsDB = new MyDatabase("./db/guilds.json");
-// global.moderationusersDB = new MyDatabase("./db/moderationusers.json");
-
-// Embed Menu
 
 function addFileLoadFolder(path, cmds) {
     if (path.endsWith(".txt")) return;
@@ -65,7 +61,11 @@ client.on("interactionCreate", async (interaction) => {
         const command = commandsFile.find(cmd => cmd.data.name === interaction.commandName);
         if (!command) return;
         try {
-            if (!devs.includes(interaction.member.user.id) && command.onlystaff && !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator))
+            if (command.onlydevs && !devs.includes(interaction.member.user.id))
+                return interaction.reply({ content: "Comando riservato ai dev del bot.", ephemeral: true });
+            if (command.botPermissions.some(p => !interaction.guild.members.me.permissions.has(p)))
+                return interaction.reply({ content: "Non ho i permessi per eseguire questo comando.", ephemeral: true });
+            if (command.memberPermissions.some(p => !interaction.member.permissions.has(p)))
                 return interaction.reply({ content: "Non hai i permessi per eseguire questo comando.", ephemeral: true });
             command.execute(interaction);
         } catch (e) {
@@ -105,12 +105,16 @@ eventsFiles.forEach(event => {
 var componentsFile = [];
 addFileLoadFolder("./components", componentsFile);
 client.on("interactionCreate", (interaction) => {
-    if (!interaction.isModalSubmit() && !(interaction.isStringSelectMenu() || interaction.isRoleSelectMenu()) && !interaction.isButton()) return;
+    if (!interaction.isModalSubmit() && !(interaction.isStringSelectMenu() || interaction.isRoleSelectMenu() || interaction.isChannelSelectMenu()) && !interaction.isButton()) return;
     const component = componentsFile.find(component => interaction.customId.startsWith(component.id));
     if (!component) return;
     try {
-        if (!devs.includes(interaction.member.user.id) && component.onlystaff && !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator))
-            return interaction.reply({ content: "Non hai i permessi per eseguire questa azione.", ephemeral: true });
+        if (component.onlydevs && !devs.includes(interaction.member.user.id))
+            return interaction.reply({ content: "Comando riservato ai dev del bot.", ephemeral: true });
+        if (component.botPermissions.some(p => !interaction.guild.members.me.permissions.has(p)))
+            return interaction.reply({ content: "Non ho i permessi per eseguire questo comando.", ephemeral: true });
+        if (!devs.includes(interaction.member.user.id) && component.memberPermissions.some(p => !interaction.member.permissions.has(p)))
+            return interaction.reply({ content: "Non hai i permessi per eseguire questo comando.", ephemeral: true });
         component.execute(interaction);
     } catch (e) {
         console.error(e);

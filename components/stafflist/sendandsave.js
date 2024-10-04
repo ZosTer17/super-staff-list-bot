@@ -1,8 +1,12 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const panels = require('../../schemas/panels');
 module.exports = {
     id: "stafflist-send_and_save",
-    onlystaff: true,
+    memberPermissions: [PermissionsBitField.Flags.Administrator],
+    botPermissions: [
+        PermissionsBitField.Flags.SendMessages,
+        PermissionsBitField.Flags.EmbedLinks
+    ],
     async execute(interaction) {
         const configEmbed = interaction.message.embeds[0].data;
         const staffRolesTags = configEmbed.fields[1].value == "Nessun ruolo impostato" ? null : configEmbed.fields[1].value.split('\n');
@@ -25,11 +29,14 @@ module.exports = {
 
         var rolesDisplay = tags.role ? staffRoles.map(role => `<@&${role.id}>`) : staffRoles.map(role => role.name);
         var usersXRoleDisplay = tags.user ? usersXRole.map(users => users.map(user => `<@${user.id}>`)) : usersXRole.map(users => users.map(user => user.username));
-        console.log(rolesDisplay, usersXRoleDisplay);
-
 
         const description = `${rolesDisplay.map((role, index) =>
             `${styles[0].replace('{role}', role).replace('{count}', usersXRoleDisplay[index].length)}\n${usersXRoleDisplay[index].map(user => `${styles[1].replace('{user}', user)}`).join('\n')}`).join('\n\n')}`;
+        if (description.length >= 4000) // Controllo se la descrizione dell'embed supera i 4000 caratteri massimi
+            return await interaction.reply({
+                content: "Hai superato i 4000 caratteri massimi per la descrizione all'interno dell'embed",
+                ephemeral: true
+            });
         const embed = new EmbedBuilder()
             .setTitle('Staff list')
             .setDescription(description)

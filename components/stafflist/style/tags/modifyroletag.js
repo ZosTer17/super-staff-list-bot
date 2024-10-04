@@ -1,7 +1,11 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 module.exports = {
     id: "stafflist-modify_role_tag",
-    onlystaff: true,
+    memberPermissions: [PermissionsBitField.Flags.Administrator],
+    botPermissions: [
+        PermissionsBitField.Flags.SendMessages,
+        PermissionsBitField.Flags.EmbedLinks
+    ],
     async execute(interaction) {
         var components = interaction.message.components;
         var button = components[2].components[0];
