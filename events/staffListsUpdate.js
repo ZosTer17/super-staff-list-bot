@@ -44,8 +44,6 @@ module.exports = {
                 }
                 staffListMsg.edit({ embeds: [embed] });
             });
-
-
         }, 60 * 1000);
     }
 }
