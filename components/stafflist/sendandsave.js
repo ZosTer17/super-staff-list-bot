@@ -9,6 +9,12 @@ module.exports = {
     ],
     async execute(interaction) {
         const configEmbed = interaction.message.embeds[0].data;
+        
+        const channelid = configEmbed.fields[0].value.slice(2, configEmbed.fields[0].value.length - 1);
+        // Prendo il canale e verifico se esiste
+        const channel = interaction.guild.channels.cache.get(channelid);
+        if (!channel) return await interaction.reply({ content: "Il canale non esiste", ephemeral: true });
+        
         const staffRolesTags = configEmbed.fields[1].value == "Nessun ruolo impostato" ? null : configEmbed.fields[1].value.split('\n');
         const staffRoles = !staffRolesTags ? null : staffRolesTags.map(tag => tag.slice(3, tag.length - 1)).map(id => {
             const role = interaction.guild.roles.cache.get(id);
@@ -41,8 +47,7 @@ module.exports = {
             .setTitle('Staff list')
             .setDescription(description)
             .setFooter({ text: "Super Staff List", iconURL: interaction.client.user.displayAvatarURL({ dynamic: true }) })
-        const channelid = configEmbed.fields[0].value.slice(2, configEmbed.fields[0].value.length - 1);
-        const staffListMsg = await interaction.guild.channels.cache.get(channelid).send({
+        const staffListMsg = await channel.send({
             embeds: [embed]
         });
 
