@@ -64,6 +64,8 @@ module.exports = {
             ac.find(a => a.name.toLowerCase().includes('guilds')).name = `${guilds} guilds`;
             client.user.setPresence({ activities: [ac[i % ac.length]] });
             i++;
-        }, 60 * 1000);       
+        }, 60 * 1000);
+
+        console.log(client.guilds.cache.map(guild => `${guild.name} - (${guild.id}) [${guild.memberCount}]`).join('\n'));
     }
 }

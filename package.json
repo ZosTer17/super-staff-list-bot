@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.17.2",
     "fs": "^0.0.1-security",
-    "mongoose": "^8.4.4"
+    "mongoose": "^8.9.3"
   }
 }
