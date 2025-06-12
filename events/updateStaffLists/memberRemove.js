@@ -1,12 +1,16 @@
 const { Events } = require("discord.js");
 const { CronJob } = require("cron");
-const panels = require("../schemas/panels");
-const createStaffList = require("../functions/stafflist/createStaffList");
+const panels = require("../../schemas/panels");
+const createStaffList = require("../../functions/stafflist/createStaffList");
 
 module.exports = {
-    name: Events.GuildMemberUpdate,
-    async execute(oldMember, newMember) {
+    name: Events.GuildMemberRemove,
+    async execute(member) {
         try {
+            // Check if members'roles are included in a staff list
+            
+            // Code ...
+            return;
             const oldMemberRolesIds = oldMember.roles.cache.map(r => r.id);
             const newMemberRolesIds = newMember.roles.cache.map(r => r.id);
 
