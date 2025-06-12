@@ -10,7 +10,6 @@ module.exports = {
     onlyDevs: false,
     async execute(interaction) {
         try {
-            const premium = await isPremium(interaction.guild);
             interaction.reply({
                 embeds: [
                     new EmbedBuilder()
