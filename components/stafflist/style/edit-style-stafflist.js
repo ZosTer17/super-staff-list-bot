@@ -11,7 +11,7 @@ module.exports = {
     onlyDevs: false,
     async execute(interaction) {
         try {
-            const premium = await isPremium(interaction.guild);
+            const premium = isPremium(interaction.guild);
             if (!premium)
                 return await interaction.reply({
                     content: "Questo comando può eseguito essere solo in un server premium",
