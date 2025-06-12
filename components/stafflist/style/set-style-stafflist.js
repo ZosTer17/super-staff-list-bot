@@ -12,7 +12,7 @@ module.exports = {
             const premium = await isPremium(interaction.guild);
             if (!premium)
                 return await interaction.reply({
-                    content: "Questo comando può essere solo in un server premium",
+                    content: "Questo comando può eseguito essere solo in un server premium",
                     flags: MessageFlags.Ephemeral
                 }).catch(() => { });
 
