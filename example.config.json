@@ -1,6 +1,7 @@
 {
     "token": "",
-    "clientID": "",
-    "mongouri": "",
-    "devs": [""]
+    "clientId": "",
+    "mongoUri": "",
+    "devs": [""],
+    "supportGuildId": ""
 }

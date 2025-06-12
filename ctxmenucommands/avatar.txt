@@ -1,0 +1,18 @@
+const { SlashCommandBuilder, PermissionsBitField, MessageFlags, ActionRowBuilder, ButtonBuilder, ButtonStyle, ContextMenuCommandBuilder, ApplicationCommandType } = require("discord.js");
+
+module.exports = {
+    data: new ContextMenuCommandBuilder()
+        .setName("avatar")
+        .setType(ApplicationCommandType.User),
+    botPermissions: [],
+    memberPermissions: [PermissionsBitField.Flags.Administrator],
+    onlyDevs: false,
+    async execute(interaction) {
+        interaction.reply({
+            content: "Ciao",
+            flags: MessageFlags.Ephemeral
+        });
+        console.log(interaction);
+        
+    }
+}
