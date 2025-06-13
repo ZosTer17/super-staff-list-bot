@@ -38,8 +38,8 @@ module.exports = {
 
             const tagsButtons = interaction.message.components[2].components;
             // Tags in base al colore dei bottoni
-            const rolesTags = tagsButtons[0].data.style === ButtonStyle.Success ? true : false;
-            const usersTags = tagsButtons[1].data.style === ButtonStyle.Success ? true : false;
+            const rolesTags = tagsButtons[0].data.style === ButtonStyle.Success;
+            const usersTags = tagsButtons[1].data.style === ButtonStyle.Success;
 
             const style = embed.fields[2].value;
 
