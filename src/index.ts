@@ -1,4 +1,4 @@
-import { SuperStafflist } from "./Client";
+import { SuperStafflist } from "./core/structures/Client";
 import "dotenv/config";
 
 const client = new SuperStafflist();

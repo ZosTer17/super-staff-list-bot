@@ -1,6 +1,7 @@
 import { Client, Collection, GatewayIntentBits, Partials, VoiceBasedChannel } from "discord.js";
+import { CommandManager } from "../managers/CommandManager";
 // import { CommandManager } from "./structures/managers/CommandManager";
-import { EventManager } from "./structures/managers/EventManager";
+// import { EventManager } from "./managers/EventManager";
 // import { ModalManager } from "./structures/managers/ModalManager";
 // // import { MenuManager } from "./structures/managers/MenuManager";
 // import { ComponentManager } from "./structures/managers/ComponentManager";
@@ -8,12 +9,12 @@ import { EventManager } from "./structures/managers/EventManager";
 export class SuperStafflist extends Client {
     constructor() {
         super({
-            intents: /** [
+            intents: [
                 GatewayIntentBits.GuildMembers,
                 GatewayIntentBits.GuildMessages,
                 GatewayIntentBits.GuildVoiceStates,
                 GatewayIntentBits.MessageContent
-            ] */ 3276799,
+            ],
             partials: [
                 Partials.Channel,
                 Partials.GuildMember,
@@ -26,15 +27,14 @@ export class SuperStafflist extends Client {
         });
     };
 
-    // public commandManager = new CommandManager();
+    public commandManager = new CommandManager();
     // public componentManager = new ComponentManager();
-    public eventManager = new EventManager();
     // public menuManager = new MenuManager();
     // public modalManager = new ModalManager();
     
     // public commands = this.commandManager.data;
     // public buttons = this.componentManager.buttons;
-    public events = this.eventManager.data;
+    // public events = this.eventManager.data;
     // public menus = this.componentManager.menus;
     // public modals = this.modalManager.data;
 
@@ -63,7 +63,7 @@ export class SuperStafflist extends Client {
 
     private async load() {
         return Promise.all([
-            this.eventManager.loadAll(),
+            // this.eventManager.loadAll(),
             // this.commandManager.loadAll(),
             // this.componentManager.loadAll(),
             // this.modalManager.loadAll()

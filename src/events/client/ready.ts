@@ -1,17 +1,16 @@
-// import { Event } from "../../structures/models/Event";
-import client from "../..";
+import { Events } from "discord.js";
+import { Event } from "../../core/structures/Event";
 
-class Ready  {
+class Ready extends Event<Events.ClientReady> {
     constructor() {
-        // super({
-        //     name: "ready", 
-        //     listener: client, 
-        //     once: true
-        // });
+        super({
+            name: Events.ClientReady,
+            once: true
+        });
     };
 
-    public run() {
-        console.log(`Registrato come: ${client.user?.tag}`);       
+    public execute() {
+        console.log("ciao, tutto pronto");
     };
 };
 
