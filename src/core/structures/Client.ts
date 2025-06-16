@@ -1,5 +1,7 @@
 import { Client, Collection, GatewayIntentBits, Partials, VoiceBasedChannel } from "discord.js";
 import { CommandManager } from "../managers/CommandManager";
+import { EventManager } from "../managers/EventManager";
+import { ComponentManager } from "../managers/ComponentManager";
 // import { CommandManager } from "./structures/managers/CommandManager";
 // import { EventManager } from "./managers/EventManager";
 // import { ModalManager } from "./structures/managers/ModalManager";
@@ -28,19 +30,12 @@ export class SuperStafflist extends Client {
     };
 
     public commandManager = new CommandManager();
-    // public componentManager = new ComponentManager();
-    // public menuManager = new MenuManager();
-    // public modalManager = new ModalManager();
-    
-    // public commands = this.commandManager.data;
-    // public buttons = this.componentManager.buttons;
-    // public events = this.eventManager.data;
-    // public menus = this.componentManager.menus;
-    // public modals = this.modalManager.data;
+    public componentManager = new ComponentManager();
+    public eventManager = new EventManager();
 
     public cooldowns = new Collection<string, Collection<string, number>>();
     
-    public readonly baseDir = __dirname;
+    public readonly baseDir = "./src";
     
     private isRealoding = false;
 
@@ -52,7 +47,7 @@ export class SuperStafflist extends Client {
                 await this.login(process.env.DISCORD_CLIENT_TOKEN!);  
             
             await this.load();
-            // await this.commandManager.publish();   
+            await this.commandManager.publish();   
         } catch (err) {
             if (err instanceof Error) {
                 console.error(err);
@@ -63,9 +58,9 @@ export class SuperStafflist extends Client {
 
     private async load() {
         return Promise.all([
-            // this.eventManager.loadAll(),
-            // this.commandManager.loadAll(),
-            // this.componentManager.loadAll(),
+            this.eventManager.loadAll(),
+            this.commandManager.loadAll(),
+            this.componentManager.loadAll()
             // this.modalManager.loadAll()
         ]);
     };

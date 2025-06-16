@@ -1,12 +1,9 @@
 import { REST, Routes } from "discord.js";
-import { InteractionsType } from "../../types/Interactions";
+import { Command, CommandType } from "../../types/Interactions";
 import { Manager } from "./Manager";
 
-const clientId = "1252210485210775676";
-
-type CommandType = InteractionsType.ChatInput | InteractionsType.Message | InteractionsType.User;
-
-export class CommandManager extends Manager<string, CommandType> {
+export class CommandManager extends Manager<string, Command<CommandType>> {
+    private clientId = "1252210485210775676";
     private rest = new REST().setToken(process.env.DISCORD_CLIENT_TOKEN!);
 
     constructor() {
@@ -17,12 +14,12 @@ export class CommandManager extends Manager<string, CommandType> {
         const commands = await this.loadFiles();
 
         for (const command of commands)
-            this.data.set(command.options.data.name, command);
+            this.data.set(command.getName(), command);
     };
 
     public async publish() {
         await this.rest.put(
-            Routes.applicationCommands(clientId),
+            Routes.applicationCommands(this.clientId),
             { body: this.data.map(c => c.options.data.toJSON()) }
         );
 

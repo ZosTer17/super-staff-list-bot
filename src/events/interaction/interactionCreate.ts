@@ -1,6 +1,7 @@
-import { ChatInputCommandInteraction, Collection, ComponentType, Events, Interaction, InteractionType } from "discord.js";
+import { Events, Interaction, InteractionType, MessageFlags } from "discord.js";
 import { Event } from "../../core/structures/Event";
 import client from "../..";
+import { Base } from "../../types/Interactions";
 
 class InteractionCreate extends Event<Events.InteractionCreate> {
     constructor() {
@@ -23,40 +24,31 @@ class InteractionCreate extends Event<Events.InteractionCreate> {
                     await command.execute(interaction);
                 } catch (err) {
                     if (err instanceof Error)
-                        // console.error(`Errore nel comando ${command.data.name}: `, err.message);
                         console.error(err);
                         
-                    // if (!interaction.replied || !interaction.deferred) {
-                    //     await interaction.reply({
-                    //         content: "C'è stato un errore durante l'esecuzione del comando",
-                    //         flags: MessageFlags.Ephemeral
-                    //     });
-                    // } else {
-                    //     await interaction.followUp({
-                    //         content: "C'è stato un errore durante l'esecuzione del comando",
-                    //         flags: MessageFlags.Ephemeral
-                    //     });
-                    // };
+                    if (!interaction.replied || !interaction.deferred) {
+                        await interaction.reply({
+                            content: "C'è stato un errore durante l'esecuzione del comando",
+                            flags: MessageFlags.Ephemeral
+                        });
+                    } else {
+                        await interaction.followUp({
+                            content: "C'è stato un errore durante l'esecuzione del comando",
+                            flags: MessageFlags.Ephemeral
+                        });
+                    };
                 };
             };
             break;
-            // case InteractionType.MessageComponent: {
-            //     const { componentType } = interaction;
+            case InteractionType.MessageComponent: {
+                const component = client.componentManager.data.get(1);
+                
+                if (!component)
+                    return;
 
-            //     switch (componentType) {
-            //         case ComponentType.Button: {
-            //             const button = client.buttons.get(`b:${interaction.customId}`);
-            //             await button?.run(interaction);
-            //         };
-            //         break;
-            //         case ComponentType.StringSelect: {
-            //             const menu = client.menus.get(`m:${interaction.customId}`);
-            //             await menu?.run(interaction);
-            //         };
-            //         break;  
-            //     };
-            // };
-            // break;
+                await component.execute(interaction);
+            };
+            break;
             // case InteractionType.ApplicationCommandAutocomplete: {
             //     const command = client.commands.get(interaction.commandName) as SlashCommand;
 
@@ -74,16 +66,21 @@ class InteractionCreate extends Event<Events.InteractionCreate> {
         };
     };
 
-    private onCooldown(data: { cooldown: number, commandName: string, memberId: string }) {
+    private isInCooldown(interaction: Interaction, cooldown: number) {
         const { cooldowns } = client;
-        const { cooldown, commandName, memberId } = data;
-
-        if (!cooldowns.has(commandName))
-            cooldowns.set(commandName, new Collection<string, number>());
-
-        const now = Date.now();
 
     };
+
+    // private onCooldown(data: { cooldown: number, commandName: string, memberId: string }) {
+    //     const { cooldowns } = client;
+    //     const { cooldown, commandName, memberId } = data;
+
+    //     if (!cooldowns.has(commandName))
+    //         cooldowns.set(commandName, new Collection<string, number>());
+
+    //     const now = Date.now();
+
+    // };
 };
 
 export default new InteractionCreate();

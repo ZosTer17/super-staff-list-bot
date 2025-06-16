@@ -1,18 +1,9 @@
 import { Collection } from "discord.js";
-import { readdirSync, } from "fs";
+import { readdirSync } from "fs";
 import { join, resolve } from "path";
-import { Base, InteractionsType } from "../../types/Interactions";
 import client from "../..";
 
-export type Properties<T> = {
-    [K in keyof T as T[K] extends Function ? never : K]: T[K];
-};
-
-export interface IModule {
-    readonly filePath: string;
-};
-
-export abstract class Manager<K, T extends InteractionsType, V = Base<T>> {
+export abstract class Manager<K, R, V = R extends Collection<infer _A, infer B> ? B : R> {
     public data = new Collection<K, V>();
     protected modules: V[] = [];
     
