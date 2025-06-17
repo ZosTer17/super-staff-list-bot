@@ -24,7 +24,7 @@ export class CommandManager<K extends CommandType> extends Manager<K, Commands<K
     public async publish() {
         await this.rest.put(
             Routes.applicationCommands(this.client.user!.id),
-            { body: this.modules.map(c => c.options.data.toJSON()) }
+            { body: this.modules.map(c => c.data.toJSON()) }
         );
           
         console.log(`Registrati in collection e caricati ${this.data.size} comandi`);

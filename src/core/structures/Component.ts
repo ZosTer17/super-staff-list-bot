@@ -6,7 +6,6 @@ import {
     ComponentType as DiscordComponentType,
     MentionableSelectMenuBuilder, 
     MentionableSelectMenuInteraction, 
-    PermissionResolvable, 
     RoleSelectMenuBuilder, 
     RoleSelectMenuInteraction, 
     StringSelectMenuBuilder,
@@ -14,6 +13,7 @@ import {
     UserSelectMenuBuilder,
     UserSelectMenuInteraction
 } from "discord.js";
+import { Base, IData } from "./Base";
 import client from "../..";
 
 export enum ComponentType {
@@ -43,34 +43,39 @@ export const componentTypeMap = {
     [DiscordComponentType.MentionableSelect]: ComponentType.MentionableSelect,
     [DiscordComponentType.RoleSelect]: ComponentType.RoleSelect,
     [DiscordComponentType.UserSelect]: ComponentType.UserSelect
-};
+} as const;
 
-export interface IComponent<T extends ComponentType> {
+export interface IComponent<T extends ComponentType> extends IData {
     data: ComponentMap[T][0];
     optionsInCustomId?: boolean;
-    cooldown?: number;
-    isDev?: boolean;
-    botPermissions?: PermissionResolvable[];
-    memberPermissions?: PermissionResolvable[];
 };
 
-export abstract class Component<T extends ComponentType> {
+export abstract class Component<T extends ComponentType> extends Base implements IComponent<T> {
     abstract readonly type: T;
+    public data: ComponentMap[T][0];
+    public optionsInCustomId?: boolean;
 
-    constructor(public options: IComponent<T>) {};
+    constructor(options: IComponent<T>) {
+        super(options);
+
+        const { data, optionsInCustomId } = options;
+        this.data = data;
+        this.optionsInCustomId = optionsInCustomId;
+    };
 
     static get<T extends keyof typeof componentTypeMap>(type: T, customId: string) {
-        return client.componentManager.data.get(componentTypeMap[type])?.get(customId);
+        const component = client.componentManager.data.get(componentTypeMap[type])?.get(customId);
+        return component as Component<typeof componentTypeMap[T]>;
     };
 
     abstract execute(interaction: ComponentMap[T][1]): Promise<void>;
 
     public getCustomId(): string {
-        const data = this.options.data.data;
-
+        const data = this.data.data;
+        
         if(!("custom_id" in data))
             throw new Error("I bottoni URL non hanno customId");
-
+        
         return data.custom_id!;
     };
 };

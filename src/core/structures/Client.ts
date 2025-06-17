@@ -2,6 +2,7 @@ import { Client, Collection, GatewayIntentBits, Partials, VoiceBasedChannel } fr
 import { CommandManager } from "../managers/CommandManager";
 import { EventManager } from "../managers/EventManager";
 import { ComponentManager } from "../managers/ComponentManager";
+import { Stafflist } from "./Stafflist";
 // import { CommandManager } from "./structures/managers/CommandManager";
 // import { EventManager } from "./managers/EventManager";
 // import { ModalManager } from "./structures/managers/ModalManager";
@@ -34,7 +35,8 @@ export class SuperStafflist extends Client {
     public componentManager = new ComponentManager();
 
     public cooldowns = new Collection<string, Collection<string, number>>();
-    
+    public stafflists = new Collection<string, Stafflist>;
+
     public readonly baseDir = "./src";
     
     private isRealoding = false;

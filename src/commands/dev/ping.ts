@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { Command, CommandType } from "../../core/structures/Command";
 
-class Ping extends Command<CommandType.ChatInput> {
+class PingCommand extends Command<CommandType.ChatInput> {
     readonly type = CommandType.ChatInput;
 
     constructor() {
@@ -25,4 +25,4 @@ class Ping extends Command<CommandType.ChatInput> {
     };
 };
 
-export default new Ping();
+export default new PingCommand();
