@@ -1,10 +1,10 @@
 import { ClientEvents } from "discord.js";
 import { Event } from "../structures/Event";
 import { Manager } from "./Manager";
-import client from "../..";
+import { SuperStafflist } from "../structures/Client";
 
 export class EventManager extends Manager<string, Event<keyof ClientEvents>> {
-    constructor() {
+    constructor(private client: SuperStafflist) {
         super("events");
     };
     
@@ -13,8 +13,8 @@ export class EventManager extends Manager<string, Event<keyof ClientEvents>> {
 
         for (const event of events) {
             event.options.once 
-                ? client.once(event.options.name, (...args) => event.execute(...args))
-                : client.on(event.options.name, (...args) => event.execute(...args));
+                ? this.client.once(event.options.name, (...args) => event.execute(...args))
+                : this.client.on(event.options.name, (...args) => event.execute(...args));
 
             this.data.set(event.options.name, event);
         };

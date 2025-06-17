@@ -29,9 +29,9 @@ export class SuperStafflist extends Client {
         });
     };
 
-    public commandManager = new CommandManager();
+    public commandManager = new CommandManager(this);
+    public eventManager = new EventManager(this);
     public componentManager = new ComponentManager();
-    public eventManager = new EventManager();
 
     public cooldowns = new Collection<string, Collection<string, number>>();
     
@@ -43,10 +43,11 @@ export class SuperStafflist extends Client {
         this.isRealoding = reload;
         
         try {
+            await this.load();
+            
             if (!reload)
                 await this.login(process.env.DISCORD_CLIENT_TOKEN!);  
             
-            await this.load();
             await this.commandManager.publish();   
         } catch (err) {
             if (err instanceof Error) {

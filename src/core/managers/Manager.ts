@@ -4,7 +4,7 @@ import { join, resolve } from "path";
 import client from "../..";
 
 export abstract class Manager<K, R, V = R extends Collection<infer _A, infer B> ? B : R> {
-    public data = new Collection<K, V>();
+    public data = new Collection<K, R>();
     protected modules: V[] = [];
     
     constructor(protected dir: string) {};

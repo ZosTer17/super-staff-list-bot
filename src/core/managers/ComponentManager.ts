@@ -1,24 +1,21 @@
-import { Base, Component, ComponentType } from "../../types/Interactions";
+import { Collection } from "discord.js";
+import { Component, ComponentType } from "../structures/Component";
 import { Manager } from "./Manager";
 
-// type Components = {
-//     buttons: Component<InteractionsType.Button>;
-//     menus: Component<InteractionsType.StringSelect>;
-//     // modals: Component<InteractionsType.Modal>
-// };
+type Components<K extends ComponentType> = Collection<string, Component<K>>;
 
-// type ComponentCollection<K extends keyof Components> = Collection<number, Components[K]>;
-
-export class ComponentManager extends Manager<number, Component<ComponentType>> {
+export class ComponentManager<K extends ComponentType> extends Manager<K, Components<K>> {
     constructor() {
         super("components");
+
+        Object.values(ComponentType).map(k => this.data.set(k as K, new Collection()));
     };
 
     public async loadAll() {
         const components = await this.loadFiles();
 
         for (const component of components) 
-            this.data.set(component.getId(), component);
+            this.data.get(component.type)?.set(component.getCustomId(), component);
 
         console.log(`Registrati in collection e caricati ${this.data.size} componenti`);
     };

@@ -1,6 +1,5 @@
-import { Events } from "discord.js";
+import { Client, Events } from "discord.js";
 import { Event } from "../../core/structures/Event";
-import client from "../..";
 
 class Ready extends Event<Events.ClientReady> {
     constructor() {
@@ -10,7 +9,7 @@ class Ready extends Event<Events.ClientReady> {
         });
     };
 
-    public execute() {
+    public execute(client: Client<true>) {
         console.log(`${client.user?.username} è online!`);
     };
 };

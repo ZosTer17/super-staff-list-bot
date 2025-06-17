@@ -1,7 +1,8 @@
 import { Events, Interaction, InteractionType, MessageFlags } from "discord.js";
 import { Event } from "../../core/structures/Event";
+import { Command } from "../../core/structures/Command";
+import { Component } from "../../core/structures/Component";
 import client from "../..";
-import { Base } from "../../types/Interactions";
 
 class InteractionCreate extends Event<Events.InteractionCreate> {
     constructor() {
@@ -15,7 +16,9 @@ class InteractionCreate extends Event<Events.InteractionCreate> {
 
         switch (type) {
             case InteractionType.ApplicationCommand: {
-                const command = client.commandManager.data.get(interaction.commandName);
+                const { commandType, commandName } = interaction;
+
+                const command = Command.get(commandType, commandName);
                 
                 if (!command)
                     return;
@@ -41,7 +44,9 @@ class InteractionCreate extends Event<Events.InteractionCreate> {
             };
             break;
             case InteractionType.MessageComponent: {
-                const component = client.componentManager.data.get(1);
+                const { componentType, customId } = interaction;
+
+                const component = Component.get(componentType, customId);
                 
                 if (!component)
                     return;

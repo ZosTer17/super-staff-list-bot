@@ -1,8 +1,8 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType } from "discord.js";
-import { Component, InteractionsType } from "../../types/Interactions";
+import { Component, ComponentType } from "../../core/structures/Component";
 
-class Click extends Component<InteractionsType.Button> {
-    readonly type = InteractionsType.Button;
+class Click extends Component<ComponentType.Button> {
+    readonly type = ComponentType.Button;
 
     constructor() {
         super({
